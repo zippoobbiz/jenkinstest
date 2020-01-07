@@ -4,7 +4,7 @@ pipeline {
         stage('Print path') {
             agent none
             steps {
-                echo $PATH
+                echo sh(returnStdout: true, script: 'env')
             }
         }
         stage('Example Build') {
