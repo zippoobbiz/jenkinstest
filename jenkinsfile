@@ -1,8 +1,12 @@
 pipeline {
-    agent {
-        label 'docker' 
-    }
+    agent none
     stages {
+        stage('Print path') {
+            agent none
+            steps {
+                echo '$Path'
+            }
+        }
         stage('Example Build') {
             agent { docker 'maven:3-alpine' } 
             steps {
