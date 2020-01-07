@@ -2,9 +2,8 @@ pipeline {
     agent none
     stages {
         stage('Print path') {
-            agent none
             steps {
-                echo sh(returnStdout: true, script: 'env')
+                sh "printenv"
             }
         }
         stage('Example Build') {
