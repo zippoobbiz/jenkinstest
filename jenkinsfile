@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('Print path') {
             steps {
-                sh "${PATH}"
-                sh "${Path}"
+                echo "${PATH}"
+                echo "${Path}"
             }
         }
         stage('Example Build') {
