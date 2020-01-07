@@ -1,13 +1,24 @@
 pipeline {
-   agent none
-   environment {
-       color = "blue"
-   }
-   stages {
-       stage('first') {
+    agent none
+    stages {
+        stage('Print environment variables') {
             agent { label 'master' }
             steps {
                sh "printenv | sort"
+            }
+        }
+        stage('Example Build') {
+            agent { docker 'maven:3-alpine' } 
+            steps {
+                echo 'Hello, Maven'
+                sh 'mvn --version'
+            }
+        }
+        stage('Example Test') {
+            agent { docker 'openjdk:8-jre' } 
+            steps {
+                echo 'Hello, JDK'
+                sh 'java -version'
             }
         }
     }
