@@ -5,6 +5,13 @@ pipeline {
             agent { label 'master' }
             steps {
                sh "printenv | sort"
+               sh "which docker"
+            }
+        }
+        stage('Find docker') {
+            agent { label 'master' }
+            steps {
+               sh "which docker"
             }
         }
         stage('Example Build') {
