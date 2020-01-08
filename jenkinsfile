@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Integration Tests') {
             steps {
-            withCredentials([approle(credentialsId: 'c9f83db9-99b6-4fb1-ad98-8c572784ada1', variable: 'ROLE_ID'),string(credentialsId: 'VAULTTOKEN', variable: 'VAULT_TOKEN')]) {
+            withCredentials(string(credentialsId: 'c9f83db9-99b6-4fb1-ad98-8c572784ada1', variable: 'ROLE_ID')) {
                 sh '''
                     set +x
                     export VAULT_ADDR=http://127.0.0.1:8200
