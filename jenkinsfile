@@ -1,4 +1,6 @@
-node {
+pipeline {
+    agent none
+    node {
         stage('Print environment variables') {
             agent { label 'master' }
             steps {
@@ -26,3 +28,4 @@ node {
             }
         }
     }
+}
