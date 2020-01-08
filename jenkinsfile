@@ -1,21 +1,21 @@
 pipeline {
     agent none
     stages {
-        stage('Print environment variables') {
-            agent { label 'master' }
-            steps {
-               sh "printenv | sort"
-            }
-        }
-        stage('Find docker') {
-            agent { label 'master' }
-            steps {
-               sh "which docker"
-            }
-        }
+        // stage('Print environment variables') {
+        //     agent { label 'master' }
+        //     steps {
+        //        sh "printenv | sort"
+        //     }
+        // }
+        // stage('Find docker') {
+        //     agent { label 'master' }
+        //     steps {
+        //        sh "which docker"
+        //     }
+        // }
         stage('Integration Tests') {
             steps {
-            withCredentials([string(credentialsId: 'c9f83db9-99b6-4fb1-ad98-8c572784ada1', variable: 'ROLE_ID')]) {
+            withCredentials([string(credentialsId: 'c9f83db9-99b6-4fb1-ad98-8c572784ada1', variable: 'ROLE_ID'),string(credentialsId: 'VAULTTOKEN', variable: 'VAULT_TOKEN')]) {
                 sh '''
                     set +x
                     export VAULT_ADDR=http://127.0.0.1:8200
@@ -28,19 +28,19 @@ pipeline {
                 }
             }
         }
-        stage('Example Build') {
-            agent { docker 'maven:3-alpine' } 
-            steps {
-                echo 'Hello, Maven'
-                sh 'mvn --version'
-            }
-        }
-        stage('Example Test') {
-            agent { docker 'openjdk:8-jre' } 
-            steps {
-                echo 'Hello, JDK'
-                sh 'java -version'
-            }
-        }
+        // stage('Example Build') {
+        //     agent { docker 'maven:3-alpine' } 
+        //     steps {
+        //         echo 'Hello, Maven'
+        //         sh 'mvn --version'
+        //     }
+        // }
+        // stage('Example Test') {
+        //     agent { docker 'openjdk:8-jre' } 
+        //     steps {
+        //         echo 'Hello, JDK'
+        //         sh 'java -version'
+        //     }
+        // }
     }
 }
