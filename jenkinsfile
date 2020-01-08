@@ -1,11 +1,8 @@
-pipeline {
-    agent none
-    stages {
+node {
         stage('Print environment variables') {
             agent { label 'master' }
             steps {
                sh "printenv | sort"
-               sh "which docker"
             }
         }
         stage('Find docker') {
@@ -29,4 +26,3 @@ pipeline {
             }
         }
     }
-}
