@@ -14,6 +14,7 @@ pipeline {
         //     }
         // }
         stage('Integration Tests') {
+            agent { label 'master' }
             steps {
             withCredentials([string(credentialsId: 'role', variable: 'ROLE_ID')]) {
                 sh '''
