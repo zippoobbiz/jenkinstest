@@ -2,27 +2,27 @@
 
 ## Scripted pipeline
 
-### start your vault locally
+#### start your vault locally
 
 ```bash
 #!/bin/bash
 vault server -dev
 ```
 
-### secrets sample
+#### secrets sample
 
 Unseal Key: bQzJlBT5+WY2Cw5WcXyQ1qgkAvz1nazB+3nCTlA4GdQ=
 
 Root Token: s.0h9b29GjxdUSz2vAEidLidz4
 
-### enable approle
+#### enable approle
 
 ```bash
 #!/bin/bash
 vault auth enable approle
 ```
 
-### create policy
+#### create policy
 
 ```bash
 #!/bin/bash
@@ -34,7 +34,7 @@ EOF
 vault policy write kv2_admin kv2_admin.hcl
 ```
 
-### Or
+#### Or
 
 ```bash
 #!/bin/bash
@@ -43,7 +43,7 @@ echo 'path "secret/*" {
 }' | vault policy-write kv2_admin -
 ```
 
-### create role
+#### create role
 
 ```bash
 #!/bin/bash
@@ -56,21 +56,21 @@ vault write auth/approle/role/local-jenkins-app \
     token_policies="kv2_admin"
 ```
 
-### read role_id
+#### read role_id
 
 ```bash
 #!/bin/bash
 vault read auth/approle/role/local-jenkins-app/role-id
 ```
 
-### get the secret_id, may need -force
+#### get the secret_id, may need -force
 
 ```bash
 #!/bin/bash
 vault write -f auth/approle/role/local-jenkins-app/secret-id
 ```
 
-### login (optional)
+#### login (optional)
 
 ```bash
 #!/bin/bash
@@ -85,7 +85,7 @@ vault write auth/approle/login \
 
 copy the role_id and secret_id to jenkins-vault plugin or update the existing credentials. Set Path to approle, ID is optional, Description is the name of the credential (wired I know)
 
-### put a kv pair in kv2
+#### put a kv pair in kv2
 
 ```bash
 #!/bin/bash
@@ -94,7 +94,7 @@ vault kv get /secret/my-secret
 vault kv get -field=key secret/my-secret
 ```
 
-### create a pipeline use the vault plugin
+#### create a pipeline use the vault plugin
 
 Create a new pipeline and setup the Vault Plugin
 
@@ -115,7 +115,7 @@ printf '%s\n' "$testing" | awk '{ print toupper($0) }'
 ```
 Save the pipeline and trigger it. You should see **** as well as **MY_VALUE** in the **Console Output**.
 
-### create a scripted pipeline
+#### create a scripted pipeline
 
 Create a new pipeline and copy the content of provided scripted-pipeline file into the script window. Don't forget to update the **vaultUrl** and **vaultCredentialId**, save it and trigger the pipeline.
 
@@ -126,7 +126,7 @@ Until this point, you can use the vault plugin gui or scripted-pipeline to get a
 This part we will create a token for jenkins and grant this token access to the approle only.
 Then an admin of the team can create or renew this approle, and Jenkins will use this approle to perform certain operations
 
-### create policy "jenkins" to allow access to local-jenkins-app approle
+#### create policy "jenkins" to allow access to local-jenkins-app approle
 
 ```bash
 #!/bin/bash
@@ -135,7 +135,7 @@ echo 'path "auth/approle/role/local-jenkins-app/secret-id" {
 }' | vault policy-write jenkins -
 ```
 
-### create token using the above policy
+#### create token using the above policy
 
 ```bash
 #!/bin/bash
