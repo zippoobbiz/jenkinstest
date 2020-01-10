@@ -1,6 +1,13 @@
 # Building Jenkins pipeline with Vault
 
-## Scripted pipeline
+This is a simple guide of how to integrate Vault with Jenkins.
+You will find three ways of using vault to secure your secrets in this page.
+
+* Vault plugin
+* Scripted pipeline
+* Declarative pipeline
+
+## Vault Setup
 
 #### start your vault locally
 
@@ -94,7 +101,7 @@ vault kv get /secret/my-secret
 vault kv get -field=key secret/my-secret
 ```
 
-#### create a pipeline use the vault plugin
+## Create a pipeline use the vault plugin
 
 Create a new pipeline and setup the Vault Plugin
 
@@ -115,7 +122,7 @@ printf '%s\n' "$testing" | awk '{ print toupper($0) }'
 ```
 Save the pipeline and trigger it. You should see **** as well as **MY_VALUE** in the **Console Output**.
 
-#### create a scripted pipeline
+## Scripted pipeline
 
 Create a new pipeline and copy the content of provided scripted-pipeline file into the script window. Don't forget to update the **vaultUrl** and **vaultCredentialId**, save it and trigger the pipeline.
 
