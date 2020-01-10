@@ -104,6 +104,7 @@ vault kv get -field=key secret/my-secret
 ## Create a pipeline use the vault plugin
 
 Create a new pipeline and setup the Vault Plugin
+![image](images/create-pipeline.png)
 
 * fill in **Vault URL**,
 * chose the right **Vault Credential**
@@ -120,11 +121,16 @@ Configure the Build part, chose **Execute shell** and paste the following script
 echo $testing
 printf '%s\n' "$testing" | awk '{ print toupper($0) }'
 ```
+
+![image](images/vault-plugin.png)
+
 Save the pipeline and trigger it. You should see **** as well as **MY_VALUE** in the **Console Output**.
 
 ## Scripted pipeline
 
 Create a new pipeline and copy the content of provided scripted-pipeline file into the script window. Don't forget to update the **vaultUrl** and **vaultCredentialId**, save it and trigger the pipeline.
+
+![image](images/scripted-pipeline.png)
 
 Until this point, you can use the vault plugin gui or scripted-pipeline to get access to the vault secret via the credentials created above, however, vault tokens have ttl, which means the access will be revoked after a certian period of time, in our case **secret-id** will expire in 60 minutes, then you will need to re-generate the secret id and update your credentials in Jenkins. Here is another way of achiving the same goal using the declarative pipeline, which will solve this problem.
 
